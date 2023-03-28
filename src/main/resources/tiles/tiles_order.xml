@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	
+	<!-- 상품 상세 페이지나 장바구니에서 한 개의 상품을 주문할 경우 주문 페이지를 표시합니다. -->
+    <definition name="/order/orderEachGoods" extends="baseLayout">
+       <put-attribute name="title" value="상품 주문 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/order/orderGoodsForm.jsp" />
+    </definition>
+    
+    <!-- 장바구니에 담긴 모든 상품을 주문할 경우 주문 페이지를 표시합니다. -->
+    <definition name="/order/orderAllCartGoods" extends="baseLayout">
+       <put-attribute name="title" value="상품 주문 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/order/orderGoodsForm.jsp" />
+    </definition> 
+    
+    <!-- 주문 결과를 표시합니다. -->
+	<definition name="/order/payToOrderGoods" extends="baseLayout">
+       <put-attribute name="title" value="상품 주문 결과 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/order/orderResult.jsp" />
+    </definition>
+    
+</tiles-definitions>
+
+

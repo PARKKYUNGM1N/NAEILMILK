@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<mapper namespace="mapper.board_qna">
+	<!-- 리절트 맵 정의 -->
+	<!-- QNA 게시판 정보를 저장할 resultMap입니다. -->
+	<resultMap id="QnaArticles" type="BoardQnaVO">
+		<result property="qna_id" column="qna_id" />
+		<result property="title" column="title" />
+		<result property="goods_id" column="goods_id" />
+		<result property="member_id" column="member_id" />
+		<result property="content" column="content" />
+		<result property="write_date" column="write_date" />
+	</resultMap>
+	
+	
+	<!-- QNA 이미지 정보를 저장하는 resultMap입니다. -->
+	<!-- <resultMap id="imageResult" type="QnaImageVO">
+		<result property="image_id" column="image_id" />
+		<result property="goods_id" column="goods_id" />
+		<result property="fileName" column="fileName" />
+		<result property="reg_id" column="reg_id" />
+	</resultMap>
+
+ -->
+
+<!-- QNA 전체조회 -->
+	<select id="selectAllQna" parameterType="java.util.Map" resultMap="QnaArticles">
+		<![CDATA[
+			SELECT *
+			FROM (
+			  SELECT ROWNUM AS rnum, qna_id,  member_id, goods_id, title, content, write_date
+			  FROM (
+			    SELECT qna_id,  member_id, goods_id, title, content, write_date
+			    FROM naeil_qna
+			    ORDER BY write_date DESC
+			  )
+			)
+			WHERE rnum BETWEEN ((#{section}-1)*15 + #{pageNum}*15 - 14) AND ((#{section}-1)*15 + #{pageNum}*15)
+		]]>
+	</select>
+	
+	<!-- 총 글 수 받아오기 -->
+	<select id="selectTotalQna" resultType="int">
+		<![CDATA[
+			SELECT COUNT(qna_id) FROM naeil_qna
+		]]>
+	</select>
+
+	
+	<!-- 상품의 QNA를 전체조회합니다. -->
+	<select id="selectQnaList" resultMap="QnaArticles"  parameterType="String" >
+	    <![CDATA[
+			select * from NAEIL_QNA
+            where goods_id = #{goods_id}
+            order by write_date desc
+		]]>
+	</select>
+	
+	
+	
+	<!-- QNA 상세 -->
+	<select id="viewQna" resultType="boardQnaVO" parameterType="int">
+	    <![CDATA[
+		    SELECT * FROM NAEIL_QNA
+		    WHERE qna_id = #{qna_id}
+	    ]]>
+	</select>
+
+
+
+	<!-- QNA 글 추가 -->
+	<!-- <selectKey> 태그를 이용해 오라클의 시퀀스 번호를 가져온 다음 QNA 테이블의 각 레코드 구분 번호로 사용합니다. -->
+	<insert id="insertNewQna" parameterType="java.util.Map">
+		<selectKey resultType="int" keyProperty="qna_id" order="BEFORE">
+			select seq_qna_id.nextval from dual
+		</selectKey>
+	    <![CDATA[
+			insert into NAEIL_QNA(qna_id,
+								  goods_id,
+								  member_id,
+							      title,
+							      content
+			                         )
+							     	 values(#{qna_id},
+							     	 		#{goods_id},
+							     	 		#{member_id},
+							     	 		#{title},
+							     			#{content}
+							     	 )
+    	]]>
+	</insert>
+	
+	<!-- QNA 삭제 -->	
+	<delete id="deleteQna"  parameterType="int">
+    <![CDATA[
+      delete from NAEIL_QNA
+      where qna_id = #{qna_id}
+    ]]>      
+  	</delete>
+	
+	<!-- qna 수정 -->
+	<update id="updateQna" parameterType="java.util.Map">
+		<![CDATA[
+		UPDATE NAEIL_QNA
+		SET title = #{qna_title}, content = #{qna_content}
+		WHERE qna_id = #{qna_id}
+		]]>    
+	</update>
+
+
+
+	<!-- 중복방지 -->
+	<select id="selectMaxQnaId" resultType="int">
+	    <![CDATA[
+			select nvl(max(qna_id), 0) + 1 from NAEIL_QNA 
+    	]]>
+	</select>
+
+
+</mapper>

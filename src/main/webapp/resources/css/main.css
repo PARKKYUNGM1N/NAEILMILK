@@ -1,0 +1,295 @@
+/* 네비바 색상 #00BFFE */
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h3 {
+    font-family: 'Cafe24SsurroundAir' !important;
+}
+
+.moveTopBtn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 4rem;
+  height: 4rem;
+  width:50px; 
+  height:50px;
+ }
+
+#outer_wrap {
+	
+}
+footer {
+	margin-top:100px;
+}
+#wrap {
+	display:flex; 
+	justify-content:center;
+	align-items:center;
+	margin-top: 60px;
+}
+a {
+	text-decoration:none; 
+	color:black;
+}
+tr {
+	vertical-align:middle;
+}
+.title_underline {
+	height: 40px;
+	border-bottom: 2px solid black;
+	margin-bottom: 20px;
+}
+
+/* 자동 완성 리스트 */
+#search-box{
+	display: none;
+	position: absolute; 
+	left: 1590px; 
+	top: 60px; 
+	border: 0.1px solid white; 
+	z-index: ; 
+	background-color: white;
+}
+
+/* 헤더 */
+.nav-link {
+	font-size: 16px; 
+	font-weight: bold;
+	color:white;
+}
+.nav-item {
+	margin:0 10px 0 10px;
+}
+#navbar-nav-2 {
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+/* 메인 */
+.main_goods {
+	display:flex;
+	align-items:center;
+	flex-wrap: wrap;
+	width:1100px;
+}
+.goods {
+	margin:10px 10px 20px 10px;
+}
+.goods>a>img {
+	background-color:#F1F3F5;
+	border-radius:10px;
+}
+.goods>a>img:hover {
+	background-color:lightgrey;
+	border-radius:10px;
+}
+.title,
+.price {
+	text-align:center;
+}
+.main_goods_div {
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+.main-title {
+	font-weight:bold;
+	width:1100px;
+	border-bottom: 2px solid black;
+}
+.main-title-div {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin: 50px 0 -50px 0;
+	height:200px;
+}
+.main_btn_div {
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	margin-top:10px;
+	margin-bottom:-100px;
+}
+#main_btn_menu {
+	width:100px;
+	height:50px;
+	margin: 10px;
+	text-align:center;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	background-color: #87CEFA;
+}
+#main_btn_menu:hover {
+	background-color: #00BFFE;
+}
+.line-image {
+	margin-top:50px;
+}
+
+/*  */
+.carousel-item {
+	height:350px;
+}
+/*  */
+
+/* 로그인 */
+.login_div {
+	text-align:center;
+	margin-top: 60px;
+}
+
+/* 회원가입 */
+.signup_div {
+	text-align:center;
+	margin-top:60px;
+}
+
+/* 상품 상세 정보 */
+.goods-title {
+	margin-top:50px;
+}
+.container {
+	text-align:center; 
+	min-width:1030px;
+}
+.tab_container {
+	margin-top:50px;
+}
+#goods_detail_menu {
+	list-style:none;
+}
+#goods_detail_menu>li {
+	float:left; 
+	padding: 20px; 
+	width:230px; 
+	margin: 10px 10px 20px 10px;
+	text-align:center;
+	background-color:#87CEFA;
+	border-radius:10px;
+	margin-bottom:50px;
+}
+#goods_detail_menu>li:hover {
+	background-color:#00BFFE;
+	border-radius:10px;
+}
+.col-md-5>img {
+	width:420px; 
+	height:420px; 
+}
+
+/* 공지사항 */
+.notice-div {
+	width:1000px;
+	margin-top: 50px;
+}
+.paging-div {
+	width:1000px; 
+	text-align:center;
+}
+
+/* 관리자 상품 조회 */
+#admin-search-btn {
+	display: flex; 
+	justify-content: center; 
+	align-items: center;
+}
+.order-main-title {
+	margin-top: 50px;
+}
+.add-goods-form {
+	margin-bottom: -100px;
+}
+
+/* 장바구니 */
+.cart-title {
+	margin-top: 50px;
+}
+.cart-list-div {
+	min-width: 680px;
+}
+
+/* 마이페이지 */
+.mypage-title {
+	margin-top: 50px;
+}
+.mypage-div {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	padding: 40px;
+	border-radius:20px;
+	margin-bottom: -50px;	
+}
+.myinfo-div {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	padding: 40px;
+	border-radius:20px;
+	margin-bottom: 10px;
+}
+
+/* 관리자 상품 추가 */
+#tab7 {
+	margin-bottom: 50px;
+}
+
+/* 후기 전체 */
+.review-div {
+	width:1000px;
+	margin-top: 50px;
+}
+.paging-div {
+	margin-bottom: -50px;
+}
+
+/* Q&A 전체 */
+.qna-div {
+	width: 1000px;
+	margin-top: 50px;
+}
+
+/* 관리자 주문 메인 */
+.admin_ordermain_title {
+	margin-top: 50px;
+}
+
+/* 관리자 회원 조회 */
+.admin_member_title {
+	margin-top: 50px;
+}
+
+/* 주문 화면 */
+#order-div {
+	margin-top: 50px;
+}
+
+/* 검색 결과 */
+.search-div {
+	margin-top: 50px;
+}
+
+/* 주문 배송 조회 */
+#order-history-title {
+	margin-top: 50px;
+}
+
+/* 내 상세 정보 */
+#detail-info-title {
+	margin-top: 50px;
+}
+#info-cancel-btn {
+	margin-bottom: -150px;
+}
+
+/* 주문 결과 */
+#order-result-title {
+	margin-top: 50px;
+}
+
+
+

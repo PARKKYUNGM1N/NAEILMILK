@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.admin.notice">
+
+	<resultMap id="noticeResult" type="noticeVO">
+		<result property="notice_id" column="notice_id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="write_date" column="write_date" />
+		<result property="member_id" column="member_id" />
+		<result property="cnt" column="cnt" />
+	</resultMap>
+	
+	<select id="selectAllNotice" parameterType="java.util.Map" resultMap="noticeResult">
+		<![CDATA[
+			SELECT *
+			FROM (
+			  SELECT ROWNUM AS rnum, notice_id, title, content, write_date, member_id, cnt
+			  FROM (
+			    SELECT notice_id, title, content, write_date, member_id, cnt
+			    FROM naeil_notice
+			    ORDER BY write_date DESC
+			  )
+			)
+			WHERE rnum BETWEEN ((#{section}-1)*15 + #{pageNum}*15 - 14) AND ((#{section}-1)*15 + #{pageNum}*15)
+		]]>
+	</select>
+	
+	<select id="selectTotalNotice" resultType="int">
+		<![CDATA[
+			SELECT COUNT(notice_id) FROM naeil_notice
+		]]>
+	</select>
+	
+	<!-- 공지 작성 -->
+	<insert id="insertNotice" parameterType="java.util.Map">
+		<selectKey resultType="String" keyProperty="notice_id" order="BEFORE">
+			SELECT seq_notice_id.nextval FROM dual
+		</selectKey>
+		
+		<![CDATA[
+			INSERT INTO naeil_notice (notice_id, title, content, write_date, member_id, cnt, imagefilename)
+						values (#{notice_id}, #{title}, #{content}, sysdate, #{member_id}, 0, #{imageFileName})
+		]]>
+	</insert>
+	
+	<!-- 공지 상세 -->
+	<select id="viewNotice" resultType="noticeVO" parameterType="int">
+	    <![CDATA[
+		    SELECT * FROM naeil_notice
+		    WHERE notice_id = #{notice_id}
+	    ]]>
+	</select>
+	
+	<!-- 공지 수정 -->
+	<update id="updateNotice" parameterType="java.util.Map">
+		UPDATE naeil_notice
+		SET title = #{title}, content = #{content}
+		WHERE notice_id = #{notice_id}
+	</update>
+	
+	<!-- 공지 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		<![CDATA[
+			DELETE FROM naeil_notice
+			WHERE notice_id = #{notice_id}
+		]]>
+	</delete>
+	
+	<!-- 조회수 -->
+	<update id="updateCnt" parameterType="int">
+		UPDATE naeil_notice
+		SET cnt = cnt + 1
+		WHERE notice_id = #{notice_id}
+	</update>
+	
+</mapper>

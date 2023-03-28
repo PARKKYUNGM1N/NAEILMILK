@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.cart">
+	<!-- 리절트 맵 정의 -->
+	<!-- 장바구니 정보를 저장할 resultMap입니다. -->
+	<resultMap id="cartResult" type="CartVO">
+		<result property="cart_id" column="cart_id" />
+		<result property="goods_id" column="goods_id" />
+		<result property="member_id" column="member_id" />
+		<result property="cart_goods_qty" column="cart_goods_qty" />
+		<result property="creDate" column="creDate" />
+	</resultMap>
+
+	<!-- 장바구니 페이지에 표시할 상품 정보를 저장할 resultMap입니다. -->
+	<resultMap id="goodsResult" type="GoodsVO">
+		<result property="goods_id" column="goods_id" />
+		<result property="goods_title" column="goods_title" />
+		<result property="goods_writer" column="goods_writer" />
+		<result property="goods_price" column="goods_price" />
+		<result property="goods_publisher" column="goods_publisher" />
+
+		<result property="goods_status" column="goods_status" />
+		<result property="goods_sales_price" column="goods_sales_price" />
+		<result property="goods_published_date"
+			column="goods_published_date" />
+		<result property="goods_total_page" column="goods_total_page" />
+		<result property="goods_isbn" column="goods_isbn" />
+		<result property="goods_delivery_price"
+			column="goods_delivery_price" />
+		<result property="goods_delivery_date"
+			column="goods_delivery_date" />
+
+		<result property="goods_fileName" column="fileName" />
+		<result property="goods_sort" column="goods_sort" />
+		<result property="goods_writer_intro"
+			column="goods_writer_intro" />
+		<result property="goods_contents_order"
+			column="goods_contents_order" />
+		<result property="goods_intro" column="goods_intro" />
+		<result property="order_goods_qty" column="order_goods_qty" />
+	</resultMap>
+
+	<!-- 모든 장바구니 정보를 조회합니다. -->
+	<select id="selectCartList" parameterType="cartVO"
+		resultMap="cartResult">
+	    <![CDATA[
+			select cart_id, goods_id, member_id, cart_goods_qty, creDate 
+			from t_shopping_cart 
+			where member_id=#{member_id} 
+			order by cart_id
+		]]>
+	</select>
+
+	<!-- 장바구니 테이블에 등록된 상품 번호를 이용해 상품 정보를 조회합니다. -->
+	<select id="selectGoodsList" resultMap="goodsResult" parameterType="java.util.Map">
+		<![CDATA[            
+			select g.*,d.fileName           
+			from (select a.cart_id, a.goods_id, a.member_id, a.cart_goods_qty, b.goods_title, b.goods_price,b.goods_sales_price         
+				  from t_shopping_cart a, t_shopping_goods b         
+				  where a.goods_id = b.goods_id         
+				  and member_id= #{member_id}
+				  order by cart_id asc) g, t_goods_detail_image d           
+			where g.goods_id=d.goods_id           
+			and d.filetype='main_image'          
+			and g.goods_id in
+		]]>
+		<foreach item="item" collection="cartList" open="(" separator="," close=")"> 
+		#{item.goods_id}         
+		</foreach>
+		order by cart_id asc
+	</select>
+
+	<!-- 장바구니 테이블에 추가하기 전에 그 상품 번호가 장바구니에 담겨 있는지 조회합니다. -->
+	<select id="selectCountInCart" resultType="String" parameterType="cartVO">
+	    <![CDATA[
+			select decode(count(*), 0, 'false', 'true') from t_shopping_cart
+			where goods_id = #{goods_id}
+			and member_id = #{member_id}
+    	]]>
+	</select>
+
+	<!-- 상품을 추가합니다. -->
+	<insert id="insertGoodsInCart" parameterType="cartVO">
+	    <![CDATA[
+			insert into t_shopping_cart(cart_id,
+										goods_id,
+										member_id,
+										cart_goods_qty)
+		        				 values(#{cart_id},
+    							        #{goods_id},
+    							        #{member_id},
+    							        #{cart_goods_qty}
+    							        )
+    	]]>
+	</insert>
+
+	<update id="updateCartGoodsQty" parameterType="cartVO">
+	    <![CDATA[
+			update t_shopping_cart
+			set cart_goods_qty=#{cart_goods_qty}
+		 	where member_id=#{member_id}
+			and goods_id=#{goods_id}
+    	]]>
+	</update>
+	<delete id="deleteCartGoods" parameterType="int">
+	    <![CDATA[
+		    delete from t_shopping_cart
+		    where cart_id = #{cart_id}
+    	]]>
+	</delete>
+
+	<select id="selectMaxCartId" resultType="int">
+	    <![CDATA[
+			select nvl(max(cart_id), 0) + 1 from t_shopping_cart 
+    	]]>
+	</select>
+
+</mapper>
