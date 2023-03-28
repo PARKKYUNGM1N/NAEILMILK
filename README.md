@@ -7,7 +7,7 @@
 
 > **사용 언어 및 개발 환경**
 > 
-- Java 8, Spring Tools 4.1.1, Tomcat v9.0, Eclipse 2020-03, Oracle XE 11g, Mybatis 3.1.0, BootStrap
+- Java 8, Spring Tools 4.1.1, Tomcat v9.0, Eclipse 2020-03, Oracle XE 11g, Mybatis 3.1.0, BootStrap 5.3.0
 
 > **설명**
 > 
