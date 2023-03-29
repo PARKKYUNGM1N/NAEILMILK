@@ -39,7 +39,7 @@ public class AdminNoticeControllerImpl extends BaseController implements AdminNo
 	@Autowired
 	private NoticeVO noticeVO;
 	
-	// 페이징
+	// 조회 + 페이징
 	@Override
 	@RequestMapping(value = "/listNotice.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView listNotice(HttpServletRequest request, HttpServletResponse response) throws Exception {
